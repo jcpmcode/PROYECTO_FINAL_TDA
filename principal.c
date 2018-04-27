@@ -5,11 +5,19 @@
 
 int main(void)
 {
+  int **mat;
+  int i, j;
   EDIF *inicio, *aux;
   inicio = NULL;
 
-  Llenar_lista(&inicio, &aux);
-  despliega_nodos(inicio);
-  limpia_nodos(inicio);
-  return 0;
+  mat = (int **) calloc (NEDIF, sizeof(int *)); // Se reserva una matriz dinamica.
+  for (i=0; i<NEDIF; i++) // Se reserva renglon por renglon dinamicamente.
+  {
+    mat[i] = (int *) calloc (NEDIF, sizeof(int));
+  }
+
+  Llenar_matriz_adyacencia(mat);
+  Llenar_lista(&inicio, &aux, mat);
+  despliega_lista(inicio);
+  limpia_lista(inicio);
 }

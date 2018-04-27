@@ -1,32 +1,40 @@
 /**
- * Función que va llenando la lista dinammica que contendrá los nodos de la topologia.
- * @param inicio almacena el nodo que es el inicio de la lista dinamica.
- * @param aux    auxiliar utilizada para realizar el encadenamiento.
+ * Se llena la matriz de adyacencia a partir del contenido del archivo.
+ * @param mat    Almacena la matriz de adyacencia.
  */
-void Llenar_lista(EDIF **inicio, EDIF **aux);
+void Llenar_matriz_adyacencia(int **mat);
 /**
- * Función que despliega el contenido de la lista (topologia).
- * @param inicio almacena el nodo que es el inicio de la lista dinamica.
+ * Se llena la lista dinamica a partir de la matriz de adyacencia.
+ * @param inicio Es el pointer que almacena el nodo de inicio.
+ * @param aux    Auxiliar utilizado para realizar el encadenamiento de la lista dinamica que representa la topologia.
+ * @param mat    Almacena la matriz de adyacencia.
  */
-void despliega_nodos(EDIF *inicio);
+void Llenar_lista(EDIF **inicio, EDIF **aux, int **mat);
 /**
- * Función que libera el espacio de memoria reservado para cada nodo de la lista dinamica.
- * @param inicio almacena el nodo que es el inicio de la lista dinamica.
+ * Función que despliega la lista ya generada.
+ * @param inicio Es el pointer que almacena el nodo de inicio.
  */
-void limpia_nodos(EDIF *inicio);
+void despliega_lista(EDIF *inicio);
 /**
- * Función que agrega una sublista de conexiones a cada nodo.
- * @param principal Es el nodo de la lista al cual se le agregaran las conexiones.
- * @param d         almacena el nombre del nodo se va a conectar.
+ * Función que libera el espacio de memoria asignado a cada nodo de la lista.
+ * @param inicio Es el pointer que almacena el nodo de inicio.
  */
-void agregar_conexion(EDIF *principal, char d);
+void limpia_lista(EDIF *inicio);
 /**
- * Función que despliega las conexiones de cada nodo.
- * @param principal Es el nodo de la lista al cual se le agregaran las conexiones.
+ * Función que agrega las conexiones que tiene cada nodo.
+ * @param principal principal es el nodo en el que se encuentra al momento de llamar a la funcion.
+ * @param mat    Almacena la matriz de adyacencia.
+ * @param i         Contador utilizado para desplazarse por los renglones de la matriz.
+ * @param j         Contador utilizado para desplazarse por las columnas de la matriz.
+ */
+void agrega_conexiones(EDIF *principal, int **mat, int i, int j);
+/**
+ * Función que libera el espacio de memoria de las conexiones de los nodos.
+ * @param principal principal es el nodo en el que se encuentra al momento de llamar a la funcion.
+ */
+void limpia_conexiones(CON *principal);
+/**
+ * Función que despliega las conexiones que tiene cada nodo.
+ * @param principal principal es el nodo en el que se encuentra al momento de llamar a la funcion.
  */
 void despliega_conexiones(EDIF *principal);
-/**
- * Libera el espacio de memoria de los nodos que se almacenan en la sublista de conexiones.
- * @param principal Es el nodo de la lista al cual se le agregaran las conexiones.
- */
-void limpia_conexiones(EDIF *principal);
