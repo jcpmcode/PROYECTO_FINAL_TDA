@@ -1,6 +1,6 @@
 //
-//  topologiaV2.c
-//  tamaño dinamico
+//  generar_topologia.c
+//
 //
 //
 //
@@ -8,29 +8,29 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>//agregada por mi
+#include <string.h>
 
-typedef struct texto_topologia{ //nueva estructura con o, d y c
+typedef struct texto_topologia{
     char o, d;
     int c;
     struct texto_topologia *sig;
 }VAL;
 
-typedef struct destino{ //a donde va, antes conexiones
+typedef struct destino{
     char nombre;
     int costo;
     struct destino *sig;
 }CON;
 
-typedef struct edificio{ //pues nuestro edif que ya existía
+typedef struct edificio{
     char nombre;
     struct edificio *sig;
     CON *conexiones;
 }EDIF;
 
 int llenar_matriz_adyacencia(int ***mat);
-void leer_topologia(VAL **inicio, char str[60]);//NEW
-void limpia_topologia(VAL **inicio);//para validar
+void leer_topologia(VAL **inicio, char str[60]);
+void limpia_topologia(VAL **inicio);
 void llenar_lista(EDIF **inicio, int **mat, int v);
 void despliega_lista(EDIF *inicio);
 void limpia_lista(EDIF **inicio);
@@ -161,7 +161,7 @@ void limpia_topologia(VAL **inicio)
 void llenar_lista(EDIF **inicio, int **mat, int v)
 {
     EDIF *nodo, *aux;
-    int i, j;//ya no se necesitan flags
+    int i, j;
 
     for (i = 0; i < v; i++) {
         nodo = malloc(sizeof(EDIF));
