@@ -1,6 +1,6 @@
 //
-//  generar_topologia.c
-//
+//  topologia.c
+//  matriz dinámica
 //
 //
 //
