@@ -1,5 +1,6 @@
 //
 //  topologia.c
+//
 //  matriz dinámica
 //
 //
@@ -19,6 +20,7 @@ typedef struct texto_topologia{
 typedef struct destino{
     char nombre;
     int costo;
+    struct edificio *des;
     struct destino *sig;
 }CON;
 
@@ -34,7 +36,7 @@ void limpia_topologia(VAL **inicio);
 void llenar_lista(EDIF **inicio, int **mat, int v);
 void despliega_lista(EDIF *inicio);
 void limpia_lista(EDIF **inicio);
-void agrega_conexiones(CON **inicio, int **mat, int i, int j);
+void agrega_conexiones(EDIF **inicio, CON **inicio2, int **mat, int i, int j);
 void limpia_conexiones(CON **inicio);
 void despliega_conexiones(CON *inicio);
 
@@ -60,8 +62,7 @@ int llenar_matriz_adyacencia(int ***mat)
     leer_topologia(&inicio, c);
     v = strlen(c);
     *mat = (int **) calloc (v, sizeof(int *));
-    for (i=0; i < v; i++) // Se reserva renglon por renglon dinamicamente.
-    {
+    for (i = 0; i < v; i++) {
         (*mat)[i] = (int *) calloc (v, sizeof(int));
     }
     aux = inicio;
@@ -181,9 +182,13 @@ void llenar_lista(EDIF **inicio, int **mat, int v)
             }
             aux->sig = nodo;
         }
+    }
+    i = 0;
+    for (aux = *inicio; aux != NULL; aux = aux->sig) {
         for (j = 0; j < v; j++) {
-            agrega_conexiones(&(nodo->conexiones), mat, i, j);
+            agrega_conexiones(inicio, &(aux->conexiones), mat, i, j);
         }
+        i++;
     }
 }
 
@@ -218,8 +223,9 @@ void limpia_lista(EDIF **inicio)
     }
 }
 
-void agrega_conexiones(CON **inicio, int **mat, int i, int j)
+void agrega_conexiones(EDIF **inicio1, CON **inicio, int **mat, int i, int j)
 {
+    EDIF *aux1;
     CON *nodo, *aux;
 
     if (mat[i][j] != 0) {
@@ -229,7 +235,11 @@ void agrega_conexiones(CON **inicio, int **mat, int i, int j)
             limpia_conexiones(inicio);
             exit(2);
         }
-        nodo->nombre = j+65;
+        aux1 = *inicio1;
+        while (aux1->nombre != j+65) {
+            aux1 = aux1->sig;
+        }
+        nodo->des = aux1;
         nodo->costo = mat[i][j];
         nodo->sig = NULL;
         if (*inicio == NULL) {
@@ -265,7 +275,7 @@ void despliega_conexiones(CON *inicio)
     if (inicio != NULL) {
         nodo = inicio;
         while (nodo != NULL) {
-            printf("\tNombre conexion: %c\n", nodo->nombre);
+            printf("\tNombre conexion: %c\n", nodo->des->nombre);
             printf("\tCosto: %d\n", nodo->costo);
             nodo = nodo->sig;
         }
