@@ -1,6 +1,7 @@
 //
 //  topologia.c
 //
+//  matriz dinámica
 //
 //
 //
@@ -17,6 +18,7 @@ typedef struct texto_topologia{
 }VAL;
 
 typedef struct destino{
+    char nombre;
     int costo;
     struct edificio *des;
     struct destino *sig;
