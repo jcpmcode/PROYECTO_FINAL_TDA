@@ -1,19 +1,30 @@
-#define NEDIF 20
+/****************************************************
+*                     TIPOS.H                       *
+*                                                   *
+* Materia: Taller de Desarrollo de Aplicaciones.      *
+*                                                   *
+* Descripción: Este modulo contendrá las            *
+*estructuras que utilizará el programa para un      *
+*correcto funcionamiento.                           *
+*                                                   *
+* El programa se realizó el 17 de abril del 2018.   *
+*                                                   *
+* Autor: Zurita Escobar Fernanda.                    *
+****************************************************/
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <strings.h>
 
-//Definicion de la estructura que conformará a cada nodo de la lista que representará la topologia.
-typedef struct edificio{
-  char nombre;
-  struct edificio *sig;
-  struct conexiones_edificio *conexiones;
-}EDIF;
+struct tablas{
+    char nodo, confirmado, sigSalto;
+    int costo;
+};//Estructura tablas.
 
-//Definición de la estructura que conformarán los nodos de la sublista en donde se almacenaran las conexiones.
-typedef struct conexiones_edificio{
-  char nombre;
-  int costo;
-  struct conexiones_edificio *sig;
-}CON;
+struct nodos{
+  char valor;
+  int nCon;
+  struct nodos *sig;
+  struct tablas *tablaR;
+  struct nodos **conexion;
+};//Estructura nodos.
