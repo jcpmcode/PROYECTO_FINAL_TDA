@@ -1,23 +1,100 @@
+/****************************************************
+*         PROGRAMA DE PRESENTACIÓN Y MENÚ           *
+*                                                   *
+* Materia:Taller de Desarrollo de Apliaciones.      *
+*                                                    *
+* Descripción: Este modulo es la presentación de    *
+*los desarrolladores y menú, se mencionarán las     *
+*opciones que puede solicitar el usuario.           *
+*                                                   *
+* El programa se realizó el 17 de abril del 2018.   *
+*                                                   *
+* Autor:Zurita Escobar Fernanda.                    *
+****************************************************/
+
+/*Bibliotecas que se utilizan para este programa*/
 #include "tipos.h"
 #include "direccionamiento.h"
 #include "topologia.h"
 #include "ruteo.h"
 
-int main(void)
+/*Funciones del programa.*/
+void Presentacion();
+void Menu();
+
+int main(void)//Comienza main.
 {
-  int **mat;
-  int i, j;
-  EDIF *inicio, *aux;
-  inicio = NULL;
+ Presentacion();
+ Menu();
+}//Fin main.
 
-  mat = (int **) calloc (NEDIF, sizeof(int *)); // Se reserva una matriz dinamica.
-  for (i=0; i<NEDIF; i++) // Se reserva renglon por renglon dinamicamente.
-  {
-    mat[i] = (int *) calloc (NEDIF, sizeof(int));
-  }
+/****************************************************
+*               FUNCIÓN PRESENTACIÓN                *
+* Esta función se encarga de imprimir mensajes en   *
+*pantalla de los desarrolladores.                   *
+*                                                   *
+* La función se realizó el 17 de abril del 2018.    *
+*                                                   *
+* Autor:Zurita Escobar Fernanda.                    *
+****************************************************/
+void Presentacion(){
+  char Enter;
+  printf("\n    ¡BIENVENIDO A LA APLICACIÓN ...!");
+  printf("\n Esta aplicación mostrará cual es el camino más eficiente");
+  printf("\n para llegar de un destino a otro en la Universidad Iberoamericana");
+  printf("\n pero si lo desea también le mostrará la ruta más larga.\n\n");
+  printf("\nIntegrantes:");
+  printf("\n--------------------------------");
+  printf("\n  Ontiveros Arroyo Daniela.");
+  printf("\n  Paniagua Mendoza José Carlos.");
+  printf("\n  Zurita Escobar Fernanda.");
+  printf("\n---------------------------------\n\n");
+  printf("                 Presione enter...");
+  while((Enter=getchar()) != '\n');//Presionar enter para limpiar pantalla.
+  system("clear");
+}
 
-  Llenar_matriz_adyacencia(mat);
-  Llenar_lista(&inicio, &aux, mat);
-  despliega_lista(inicio);
-  limpia_lista(inicio);
+/****************************************************
+*                   FUNCIÓN MENÚ                    *
+* Esta función se encarga de imprimir mensajes en   *
+*la pantalla de lo opciones que el usuario puede.   *
+*seleccionar.                                       *
+*                                                   *
+* La función se realizó el 17 de abril del 2018.    *
+*                                                   *
+* Autor:Zurita Escobar Fernanda.                    *
+****************************************************/
+void Menu(){
+  int opcion;//Variable entero para seleccionar número.
+  char origen, destino;//Variable char para origen(De donde esta) y destino(A donde quiere ir)
+    printf(" _______________________________\n");
+    printf("|_____________MENU______________|\n");
+    printf("| 1. Mostrar la ruta más corta. |\n");
+    printf("| 2. Mostrar la ruta más larga. |\n");
+    printf("| 3. Salir.                     |\n");
+    printf("|_______________________________|\n");
+    printf("Opción seleccionada -> ");
+    scanf("%d",&opcion);
+    switch (opcion)
+    {
+      case 1:
+        printf("\nIngrese lugar de origen: ");
+        scanf("%s",&origen);
+        printf("\nIngrese lugar de destino: ");
+        scanf("%s",&destino);
+        printf("\nCalculando ruta...\n");
+        break;
+
+        case 2:
+        printf("\nIngrese lugar de origen: ");
+        scanf("%s",&origen);
+        printf("\nIngrese lugar de destino: ");
+        scanf("%s",&destino);
+        printf("\nCalculando ruta...\n");
+        break;
+
+        case 3:
+        printf("\nHasta la proxima.\n");
+        break;
+      }
 }
