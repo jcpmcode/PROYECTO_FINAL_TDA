@@ -1,7 +1,6 @@
 //
 //  topologia.c
-//
-//  matriz dinámica
+//  Validacion 1
 //
 //
 //
@@ -11,20 +10,19 @@
 #include <stdlib.h>
 #include <string.h>
 
-typedef struct texto_topologia{
+typedef struct texto_topologia {
     char o, d;
     int c;
     struct texto_topologia *sig;
 }VAL;
 
-typedef struct destino{
-    char nombre;
+typedef struct destino {
     int costo;
     struct edificio *des;
     struct destino *sig;
 }CON;
 
-typedef struct edificio{
+typedef struct edificio {
     char nombre;
     struct edificio *sig;
     CON *conexiones;
@@ -39,6 +37,7 @@ void limpia_lista(EDIF **inicio);
 void agrega_conexiones(EDIF **inicio, CON **inicio2, int **mat, int i, int j);
 void limpia_conexiones(CON **inicio);
 void despliega_conexiones(CON *inicio);
+void limpia_matriz_adyacencia(int **mat, int v);
 
 int main(void)
 {
@@ -50,6 +49,7 @@ int main(void)
     llenar_lista(&inicio, mat, v);
     despliega_lista(inicio);
     limpia_lista(&inicio);
+    limpia_matriz_adyacencia(mat, v);
 }
 
 int llenar_matriz_adyacencia(int ***mat)
@@ -61,6 +61,11 @@ int llenar_matriz_adyacencia(int ***mat)
 
     leer_topologia(&inicio, c);
     v = strlen(c);
+    for (i = 0; i < strlen(c); i++) {
+        if (c[i]-64 > v) {
+            v = c[i]-64;
+        }
+    }
     *mat = (int **) calloc (v, sizeof(int *));
     for (i = 0; i < v; i++) {
         (*mat)[i] = (int *) calloc (v, sizeof(int));
@@ -283,4 +288,13 @@ void despliega_conexiones(CON *inicio)
     } else {
         printf("\nNo hay conexiones\n\n");
     }
+}
+
+void limpia_matriz_adyacencia(int **mat, int v)
+{
+    while (v > 0) {
+        free(mat[v-1]);
+        v--;
+    }
+    free(mat);
 }
