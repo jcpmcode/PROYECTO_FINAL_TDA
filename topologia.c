@@ -1,300 +1,101 @@
-//
-//  topologia.c
-//  Validacion 1
-//
-//
-//
-//
+/****************************************************
+*               MODULO DE TOPOLOGIA                 *
+*                                                   *
+* Materia:Taller de Desarrollo de Apliaciones.      *
+*                                                   *
+* Descripción: Este modulo se desarrolla la         *
+*topología de la red, es decir, se construyen los   *
+*nodos y las conexiones entre cada uno de los nodos *
+*                                                   *
+* El programa se realizó el 17 de abril del 2018.   *
+*                                                   *
+* Autor:Zurita Escobar Fernanda.                    *
+****************************************************/
+/*Bibliotecas que se utilizaran en el programa*/
+#include<stdio.h>
+#include<stdlib.h>
+#include "topologia.h"
+#include "tipos.h"
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
+/*Funciones que componen el programa.*/
+void GenerarEdificios(nodo **inicio);
+void imprimir(nodo *inicio);
 
-typedef struct texto_topologia {
-    char o, d;
-    int c;
-    struct texto_topologia *sig;
-}VAL;
+int main(void){//Inicia main.
+  nodo *inicio=NULL;
+  GenerarEdificios(&inicio);
+  imprimir(inicio);
+}//Final main.
 
-typedef struct destino {
-    int costo;
-    struct edificio *des;
-    struct destino *sig;
-}CON;
-
-typedef struct edificio {
-    char nombre;
-    struct edificio *sig;
-    CON *conexiones;
-}EDIF;
-
-int llenar_matriz_adyacencia(int ***mat);
-void leer_topologia(VAL **inicio, char str[60]);
-void limpia_topologia(VAL **inicio);
-void llenar_lista(EDIF **inicio, int **mat, int v);
-void despliega_lista(EDIF *inicio);
-void limpia_lista(EDIF **inicio);
-void agrega_conexiones(EDIF **inicio, CON **inicio2, int **mat, int i, int j);
-void limpia_conexiones(CON **inicio);
-void despliega_conexiones(CON *inicio);
-void limpia_matriz_adyacencia(int **mat, int v);
-
-int main(void)
-{
-    int **mat;
-    int v;
-    EDIF *inicio = NULL;
-
-    v = llenar_matriz_adyacencia(&mat);
-    llenar_lista(&inicio, mat, v);
-    despliega_lista(inicio);
-    limpia_lista(&inicio);
-    limpia_matriz_adyacencia(mat, v);
-}
-
-int llenar_matriz_adyacencia(int ***mat)
-{
-    VAL *inicio, *aux;
-    char c[60];
-    int i, j, v;
-    inicio = NULL;
-
-    leer_topologia(&inicio, c);
-    v = strlen(c);
-    for (i = 0; i < strlen(c); i++) {
-        if (c[i]-64 > v) {
-            v = c[i]-64;
+/*****************************************************
+*             FUNCIÓN GENERAREDIFICIOS               *
+*                                                    *
+* Esta función se encarga de generar una lista       *
+*doblemente encadenada, la cual simula los edificios *
+*de la escuela.                                      *
+*                                                    *
+* La función se realizó el 17 de abril del 2018.     *
+*                                                    *
+* Autor:Zurita Escobar Fernanda.                     *
+*****************************************************/
+void GenerarEdificios(nodo **inicio){//Inicia función GenerarEdificios.
+  nodo *nuevo, *indice;//Declaración de variables.
+  FILE *arch;
+  char x, y;//Declaración de variables.
+  int costo, bandera;//Declaración de variables.
+  arch=fopen("ruta.dat","rt");//Se abre el archivo donde se encuentra la información.
+  while(fscanf(arch,"%c:%c:%d\n",&x,&y,&costo)==3){
+     indice=*inicio;
+     nuevo=(nodo*)malloc(sizeof(nodo));//Se crea nuevo edificio.
+     nuevo->valor=x;
+     nuevo->abajo=NULL;
+     if(*inicio==NULL){
+        nuevo->sig=NULL;
+        *inicio=nuevo;
+     }
+     else{//Se comprueba que el edificio no este creado.
+        bandera=0;
+        while(indice!=NULL){
+            if(indice->valor==x)
+                bandera=1;
+            indice=indice->sig;
         }
+        if(bandera==0){//Se inserta edificio sino esta creado.
+            nuevo->sig=*inicio;
+            *inicio=nuevo;
+        }
+     }
+     indice=*inicio;
+     nuevo=(nodo*)malloc(sizeof(nodo));//Se crea nuevo edificio.
+     nuevo->valor=y;
+     nuevo->abajo=NULL;
+        bandera=0;
+        while(indice!=NULL){//Se busca si el edificio ya esta creado.
+            if(indice->valor==y)
+                bandera=1;
+            indice=indice->sig;
+        }
+        if(bandera==0){//Se inserta edificio sino esta creado.
+            nuevo->sig=*inicio;
+            *inicio=nuevo;
+        }
+  }
+}//Fin GenerarEdificios.
+
+/****************************************************
+*                  FUNCIÓN IMPRIMIR                 *
+* Esta función se encarga de imprimir los edificios *
+*                                                   *
+* La función se realizó el 17 de abril del 2018.    *
+*                                                   *
+* Autor:Zurita Escobar Fernanda.                    *
+****************************************************/
+void imprimir(nodo *inicio){//Inicia función imprimir.
+    nodo *indice=inicio;//Apuntador.
+    conexion *indice2;//Apuntador.
+    while(indice!=NULL){//Se recorre la lista dinamica.
+        printf("Edificio: %c\n",indice->valor);
+        indice=indice->sig;
+        printf("----------------------\n");
     }
-    *mat = (int **) calloc (v, sizeof(int *));
-    for (i = 0; i < v; i++) {
-        (*mat)[i] = (int *) calloc (v, sizeof(int));
-    }
-    aux = inicio;
-    while (aux != NULL) {
-        (*mat)[(aux->o)-65][(aux->d)-65] = aux->c;
-        (*mat)[(aux->d)-65][(aux->o)-65] = aux->c;
-        aux = aux->sig;
-    }
-    limpia_topologia(&inicio);
-    printf("Matriz de adyacencia.\n");
-    for (i = 0; i < v; i++) {
-        for (j = 0; j < v; j++) {
-            printf("%d ", (*mat)[i][j]);
-        }
-        printf("\n");
-    }
-    return v;
-}
-
-void leer_topologia(VAL **inicio, char str[60])
-{
-    FILE *fp;
-    VAL *nodo, *aux;
-    char o, d;
-    int c, i;
-    char line[260];
-
-    i = 0;
-    fp = fopen("topologia.txt", "rt");
-    if (fp != NULL) {
-        while (fgets(line, 255, fp) != NULL) {
-            if (sscanf(line, "%c:%c:%d", &o, &d, &c) == 3) {
-                nodo = malloc(sizeof(VAL));
-                if (nodo == NULL) {
-                    printf("No hay suficiente memoria.\n");
-                    limpia_topologia(inicio);
-                    exit(2);
-                }
-                nodo->o = o;
-                nodo->d = d;
-                nodo->c = c;
-                nodo->sig = NULL;
-                if(*inicio == NULL) {
-                    *inicio = nodo;
-                } else {
-                    aux->sig = nodo;
-                }
-                aux = nodo;
-            }
-        }
-        fclose(fp);
-        for (c = 0; c < 60; c++) {
-            str[c] = '\0';
-        }
-        aux = *inicio;
-        while (aux != NULL) {
-            i = 0;
-            for (c = 0; str[c] != '\0'; c++) {
-                if (str[c] == aux->o) {
-                    i = 1;
-                }
-            }
-            if (i == 0) {
-                str[c] = aux->o;
-            }
-            i = 0;
-            for (c = 0; str[c] != '\0'; c++) {
-                if (str[c] == aux->d) {
-                    i = 1;
-                }
-            }
-            if (i == 0) {
-                str[c] = aux->d;
-            }
-            aux = aux->sig;
-        }
-    } else {
-        printf("No existe topologia.\n");
-        exit(1);
-    }
-}
-
-void limpia_topologia(VAL **inicio)
-{
-    VAL *nodo;
-
-    if (*inicio != NULL) {
-        nodo = *inicio;
-        while (nodo != NULL) {
-            *inicio = nodo->sig;
-            free(nodo);
-            nodo = *inicio;
-        }
-    }
-}
-
-void llenar_lista(EDIF **inicio, int **mat, int v)
-{
-    EDIF *nodo, *aux;
-    int i, j;
-
-    for (i = 0; i < v; i++) {
-        nodo = malloc(sizeof(EDIF));
-        if (nodo == NULL) {
-            printf("No hay suficiente memoria.\n");
-            exit(2);
-        }
-        nodo->nombre = i+65;
-        nodo->sig = NULL;
-        nodo->conexiones = NULL;
-        if (*inicio == NULL) {
-            *inicio = nodo;
-        } else {
-            aux = *inicio;
-            while (aux->sig != NULL) {
-                aux = aux->sig;
-            }
-            aux->sig = nodo;
-        }
-    }
-    i = 0;
-    for (aux = *inicio; aux != NULL; aux = aux->sig) {
-        for (j = 0; j < v; j++) {
-            agrega_conexiones(inicio, &(aux->conexiones), mat, i, j);
-        }
-        i++;
-    }
-}
-
-void despliega_lista(EDIF *inicio)
-{
-    EDIF *nodo;
-
-    if (inicio != NULL) {
-        nodo = inicio;
-        while (nodo != NULL) {
-            printf("Nombre: %c\n", nodo->nombre);
-            despliega_conexiones(nodo->conexiones);
-            nodo = nodo->sig;
-        }
-    } else {
-        printf("No hay nada que desplegar.\n");
-    }
-}
-
-void limpia_lista(EDIF **inicio)
-{
-    EDIF *nodo;
-
-    if (*inicio != NULL) {
-        nodo = *inicio;
-        while (nodo != NULL) {
-            *inicio = nodo->sig;
-            limpia_conexiones(&(nodo->conexiones));
-            free(nodo);
-            nodo = *inicio;
-        }
-    }
-}
-
-void agrega_conexiones(EDIF **inicio1, CON **inicio, int **mat, int i, int j)
-{
-    EDIF *aux1;
-    CON *nodo, *aux;
-
-    if (mat[i][j] != 0) {
-        nodo = malloc(sizeof(CON));
-        if (nodo == NULL) {
-            printf("No hay suficiente memoria.\n");
-            limpia_conexiones(inicio);
-            exit(2);
-        }
-        aux1 = *inicio1;
-        while (aux1->nombre != j+65) {
-            aux1 = aux1->sig;
-        }
-        nodo->des = aux1;
-        nodo->costo = mat[i][j];
-        nodo->sig = NULL;
-        if (*inicio == NULL) {
-            *inicio = nodo;
-        } else {
-            aux = *inicio;
-            while (aux->sig != NULL) {
-                aux = aux->sig;
-            }
-            aux->sig = nodo;
-        }
-    }
-}
-
-void limpia_conexiones(CON **inicio)
-{
-    CON *nodo;
-
-    if (*inicio != NULL) {
-        nodo = *inicio;
-        while (nodo != NULL) {
-            *inicio = nodo->sig;
-            free(nodo);
-            nodo = *inicio;
-        }
-    }
-}
-
-void despliega_conexiones(CON *inicio)
-{
-    CON *nodo;
-
-    if (inicio != NULL) {
-        nodo = inicio;
-        while (nodo != NULL) {
-            printf("\tNombre conexion: %c\n", nodo->des->nombre);
-            printf("\tCosto: %d\n", nodo->costo);
-            nodo = nodo->sig;
-        }
-        printf("\n");
-    } else {
-        printf("\nNo hay conexiones\n\n");
-    }
-}
-
-void limpia_matriz_adyacencia(int **mat, int v)
-{
-    while (v > 0) {
-        free(mat[v-1]);
-        v--;
-    }
-    free(mat);
-}
+}//Fin imprimir.
