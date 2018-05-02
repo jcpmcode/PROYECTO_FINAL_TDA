@@ -7,19 +7,19 @@
 *topología de la red, es decir, se construyen los   *
 *nodos y las conexiones entre cada uno de los nodos *
 *                                                   *
-* El programa se realizó el 20 de abril del 2018.   *
+* El programa se realizó el 23 de abril del 2018.   *
 *                                                   *
 * Autor:Zurita Escobar Fernanda.                    *
 ****************************************************/
 /*Bibliotecas que se utilizaran en el programa*/
 #include<stdio.h>
 #include<stdlib.h>
-#include "topologia.h"
-#include "tipos.h"
+#include "topologia2.h"
 
 /*Funciones que componen el programa.*/
 void GenerarEdificios(nodo **inicio);
 void GenerarTabla(int ***tablaA, nodo *inicio);
+void GenerarConexiones(nodo **inicio, int **tabla);
 int conNodos(nodo *inicio);
 void imprimir(nodo *inicio);
 
@@ -28,6 +28,7 @@ int main(void){//Inicia main.
   nodo *inicio=NULL;
   GenerarEdificios(&inicio);
   GenerarTabla(&tabla,inicio);
+  GenerarConexiones(&inicio,tabla);
   imprimir(inicio);
 }//Final main.
 
@@ -82,10 +83,10 @@ void GenerarEdificios(nodo **inicio){//Inicia función GenerarEdificios.
             *inicio=nuevo;
         }
   }
-}//Fin GenerarEdificios..
+}
 
 /*****************************************************
-*                 FUNCIÓN GENERARTABLA               *
+*               FUNCIÓN GENERARTABLA                 *
 *                                                    *
 * Esta función se encarga de generar la tabla de     *
 *adyacencias.                                        *
@@ -143,6 +144,45 @@ void GenerarTabla(int ***tablaA, nodo *inicio){//Inicia función GenerarTabla.
 }//Fin GenerarTabla.
 
 /*****************************************************
+*            FUNCIÓN GENERARCONEXIONES               *
+*                                                    *
+* Esta función se encarga de generar un arreglo      *
+*dinamico de apuntadores para las conexiones.        *
+*                                                    *
+* La función se realizó el 23 de abril del 2018.     *
+*                                                    *
+* Autor:Zurita Escobar Fernanda.                     *
+*****************************************************/
+void GenerarConexiones(nodo **inicio, int **tablaA){//Inicia función GenerarConexiones.
+  int nNodos=conNodos(*inicio),i=0,j=0, num=0, l;
+  nodo *aux1=*inicio, *aux2=*inicio;
+  while(aux1!=NULL){
+    num=0;
+    for(j=0;j<nNodos;j++){
+      if(tablaA[i][j]!=-1 && tablaA[i][j]!=0)//Cuenta el numero de conexiones.
+        num++;
+    }
+    aux1->nCon=num;
+    aux1->conexion=(nodo**)malloc(sizeof(nodo*)*num);//Genera el arreglo dinamico.
+    l=0;
+    for(j=0;j<nNodos;j++){
+      aux2=*inicio;
+      if(tablaA[i][j]!=-1 && tablaA[i][j]!=0){
+        num=0;
+        while(j!=num){//Busca el apuntador donde debe generar la conexión.
+          num++;
+          aux2=aux2->sig;
+        }
+        aux1->conexion[l]=aux2;//Genera una conexión.
+        l++;
+      }
+    }
+    i++;
+    aux1=aux1->sig;
+  }
+}//Fin GenerarConexiones.
+
+/*****************************************************
 *                   FUNCIÓN CONNODOS                 *
 *                                                    *
 * Esta función se encarga de contar el numero de     *
@@ -162,19 +202,24 @@ int conNodos(nodo *inicio){//Inicia función conNodos.
     return sum;
 }//Fin conNodos.
 
-/****************************************************
-*                  FUNCIÓN IMPRIMIR                 *
-* Esta función se encarga de imprimir los edificios *
-*                                                   *
-* La función se realizó el 17 de abril del 2018.    *
-*                                                   *
-* Autor:Zurita Escobar Fernanda.                    *
-****************************************************/
+/*****************************************************
+*                   FUNCIÓN IMPRIMIR                 *
+*                                                    *
+* Esta función se encarga de imprimir la topologia.  *
+*                                                    *
+* La función se realizó el 20 de abril del 2018.     *
+*                                                    *
+* Autor:Zurita Escobar Fernanda.                     *
+*****************************************************/
 void imprimir(nodo *inicio){//Inicia función imprimir.
     nodo *indice=inicio;
     int i;
-    while(indice!=NULL){//Se recorre la lista dinamica.
-        printf("Edificio: %c\n",indice->valor);
+    while(indice!=NULL){
+        printf("Edificio: %c\n",indice->valor);//Imprime el edficio.
+        printf("Numero de conexiones: %d\n",indice->nCon);//Imprime el numero de conexiones.
+        for(i=0;i<indice->nCon;i++){//Recorre el arreglo de pointers.
+          printf("\t%c\n",indice->conexion[i]->valor);//Imprime el valor de la conexión.
+        }
         indice=indice->sig;
         printf("----------------------\n");
     }
