@@ -1,9 +1,5 @@
 //
-//  direc.c
-//
-//
-//
-//
+//direc2.c
 //
 
 #include <stdio.h>
@@ -11,7 +7,7 @@
 #include <string.h>
 
 typedef struct texto_topologia{
-    char o, d;
+    char o, d;                  
     int c;
     struct texto_topologia *sig;
 }VAL;
@@ -72,7 +68,6 @@ int llenar_matriz_adyacencia(int ***mat)
         aux = aux->sig;
     }
     limpia_topologia(&inicio);
-
     printf("Matriz de adyacencia.\n");
     for (i = 0; i < v; i++) {
         for (j = 0; j < v; j++) {
@@ -80,7 +75,6 @@ int llenar_matriz_adyacencia(int ***mat)
         }
         printf("\n");
     }
-
     return v;
 }
 
@@ -302,11 +296,9 @@ void camino_corto(EDIF *inicio, char camino[60], char o, char d)
     EDIF *auxe;
     CON *auxc;
     int i, v;
-    char o2[2];
 
-    o2[0] = o;
-    o2[1] = '\0';
-    strcat(camino, o2);
+    i = strlen(camino);
+    camino[i] = o;
 
     if (o == d) {
         printf("%s\n", camino);
@@ -329,4 +321,6 @@ void camino_corto(EDIF *inicio, char camino[60], char o, char d)
             auxc = auxc->sig;
         }
     }
+    i = strlen(camino);
+    camino[i-1] = '\0';
 }
