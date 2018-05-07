@@ -11,17 +11,12 @@
 * Autores:Zurita Escobar Fernanda                   *
 * José Carlos Paniagua Mendoza                      *
 ****************************************************/
-struct nodos{
-  char valor;
-  struct nodos *sig;
-  struct conexiones *abajo;
-  struct tablas *tablaR;
-};//Estructura nodos.
 
-struct conexiones{
-  int costo;
-  char destino;
-  struct conexiones *sig;
-};//Estructura conexiones.
-typedef struct nodos nodo;
-typedef struct conexiones conexion;
+#include "tipos.h"
+
+/*Funciones que componen el programa.*/
+void GenerarEdificios(nodo **inicio);
+void GenerarTabla(int ***tablaA, nodo *inicio);
+void GenerarConexiones(nodo **inicio, int **tabla);
+int conNodos(nodo *inicio);
+void imprimir(nodo *inicio);

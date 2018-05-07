@@ -12,39 +12,8 @@
 * Autores:Zurita Escobar Fernanda                   *
 * José Carlos Paniagua Mendoza                      *
 ****************************************************/
-/*Bibliotecas que se utilizaran en el programa*/
 
-struct tablas{
-  char nodo, confirmado, sigSalto;
-  int costo;
-};typedef struct tablas rtabla;
-
-struct nodos{
-  char valor;
-  int nCon;
-  struct nodos *sig;
-  struct tablas *tablaR;
-  struct nodos **conexion;
-};typedef struct nodos nodo;
-
-#include<stdio.h>
-#include<stdlib.h>
-
-/*Funciones que componen el programa.*/
-void GenerarEdificios(nodo **inicio);
-void GenerarTabla(int ***tablaA, nodo *inicio);
-void GenerarConexiones(nodo **inicio, int **tabla);
-int conNodos(nodo *inicio);
-void imprimir(nodo *inicio);
-
-int main(void){//Inicia main.
-  int **tabla;
-  nodo *inicio=NULL;
-  GenerarEdificios(&inicio);
-  GenerarTabla(&tabla,inicio);
-  GenerarConexiones(&inicio,tabla);
-  imprimir(inicio);
-}//Final main.
+#include "topologia.h"
 
 /*****************************************************
 *             FUNCIÓN GENERAREDIFICIOS               *
@@ -55,8 +24,9 @@ int main(void){//Inicia main.
 *                                                    *
 * La función se realizó el 17 de abril del 2018.     *
 *                                                    *
-* Autor:Zurita Escobar Fernanda.                     *
-*****************************************************/
+* Autores:Zurita Escobar Fernanda                   *
+* José Carlos Paniagua Mendoza                      *
+****************************************************/
 void GenerarEdificios(nodo **inicio){//Inicia función GenerarEdificios.
   nodo *nuevo, *indice;//Declaración de variables.
   FILE *arch;
@@ -107,8 +77,9 @@ void GenerarEdificios(nodo **inicio){//Inicia función GenerarEdificios.
 *                                                    *
 * La función se realizó el 20 de abril del 2018.     *
 *                                                    *
-* Autor:Zurita Escobar Fernanda.                     *
-*****************************************************/
+* Autores:Zurita Escobar Fernanda                   *
+* José Carlos Paniagua Mendoza                      *
+****************************************************/
 void GenerarTabla(int ***tablaA, nodo *inicio){//Inicia función GenerarTabla.
   nodo *aux1=inicio, *aux2=inicio;
   int i,j,c;
@@ -165,8 +136,9 @@ void GenerarTabla(int ***tablaA, nodo *inicio){//Inicia función GenerarTabla.
 *                                                    *
 * La función se realizó el 23 de abril del 2018.     *
 *                                                    *
-* Autor:Zurita Escobar Fernanda.                     *
-*****************************************************/
+* Autores:Zurita Escobar Fernanda                   *
+* José Carlos Paniagua Mendoza                      *
+****************************************************/
 void GenerarConexiones(nodo **inicio, int **tablaA){//Inicia función GenerarConexiones.
   int nNodos=conNodos(*inicio),i=0,j=0, num=0, l;
   nodo *aux1=*inicio, *aux2=*inicio;
@@ -204,8 +176,9 @@ void GenerarConexiones(nodo **inicio, int **tablaA){//Inicia función GenerarCon
 *                                                    *
 * La función se realizó el 20 de abril del 2018.     *
 *                                                    *
-* Autor:Zurita Escobar Fernanda.                     *
-*****************************************************/
+* Autores:Zurita Escobar Fernanda                   *
+* José Carlos Paniagua Mendoza                      *
+****************************************************/
 int conNodos(nodo *inicio){//Inicia función conNodos.
     nodo *aux=inicio;
     int sum=0;
@@ -223,8 +196,9 @@ int conNodos(nodo *inicio){//Inicia función conNodos.
 *                                                    *
 * La función se realizó el 20 de abril del 2018.     *
 *                                                    *
-* Autor:Zurita Escobar Fernanda.                     *
-*****************************************************/
+* Autores:Zurita Escobar Fernanda                   *
+* José Carlos Paniagua Mendoza                      *
+****************************************************/
 void imprimir(nodo *inicio){//Inicia función imprimir.
     nodo *indice=inicio;
     int i;
