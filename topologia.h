@@ -3,7 +3,7 @@
 *                                                   *
 * Materia:Taller de Desarrollo de Apliaciones.      *
 *                                                   *
-* Descripción: Contiene las estructuras que se      *
+* Descripción: Contiene las funciones que se        *
 * utilizarán en el modulo de topología.h            *
 *                                                   *
 * El programa se realizó el 17 de abril del 2018.   *
