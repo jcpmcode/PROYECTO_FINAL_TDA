@@ -12,8 +12,6 @@
 * José Carlos Paniagua Mendoza                      *
 ****************************************************/
 
-#include "tipos.h"
-
 /*Funciones que componen el programa.*/
 void GenerarEdificios(nodo **inicio);
 void GenerarTabla(int ***tablaA, nodo *inicio);

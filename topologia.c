@@ -12,7 +12,7 @@
 * Autores:Zurita Escobar Fernanda                   *
 * José Carlos Paniagua Mendoza                      *
 ****************************************************/
-
+#include "tipos.h"
 #include "topologia.h"
 
 /*****************************************************
