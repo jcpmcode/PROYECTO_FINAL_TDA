@@ -1,14 +1,15 @@
 /****************************************************
-*                   TOPOLOGIA.H                     *
+*                      TIPOS.H                      *
 *                                                   *
 * Materia:Taller de Desarrollo de Apliaciones.      *
 *                                                   *
 * Descripción: Contiene las estructuras que se      *
-* utilizarán en el modulo de topología.h            *
+* utilizarán a lo largo de todo el programa.        *
 *                                                   *
 * El programa se realizó el 17 de abril del 2018.   *
-*                                                   *          *
-* José Carlos Paniagua Mendoza                      *
+*                                                   *
+* Autores: Zurita Escobar Fernanda                  *
+*José Carlos Paniagua Mendoza                       *
 ****************************************************/
 
 #include <stdio.h>
