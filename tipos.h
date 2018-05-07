@@ -8,7 +8,8 @@
 *                                                   *
 * El programa se realizó el 17 de abril del 2018.   *
 *                                                   *
-* Autor:Zurita Escobar Fernanda.                    *
+* Autores:Zurita Escobar Fernanda                   *
+* José Carlos Paniagua Mendoza                      *
 ****************************************************/
 struct nodos{
   char valor;

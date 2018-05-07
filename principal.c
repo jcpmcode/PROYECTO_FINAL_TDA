@@ -8,8 +8,8 @@
 *opciones que puede solicitar el usuario.           *
 *                                                   *
 * El programa se realizó el 17 de abril del 2018.   *
-*                                                   *
-* Autor:Zurita Escobar Fernanda.                    *
+* Autores:Zurita Escobar Fernanda                   *
+* José Carlos Paniagua Mendoza                      *
 ****************************************************/
 
 /*Bibliotecas que se utilizan para este programa*/
@@ -35,7 +35,8 @@ int main(void)//Comienza main.
 *                                                   *
 * La función se realizó el 17 de abril del 2018.    *
 *                                                   *
-* Autor:Zurita Escobar Fernanda.                    *
+* Autores:Zurita Escobar Fernanda                   *
+* José Carlos Paniagua Mendoza                      *
 ****************************************************/
 void Presentacion(){
   char Enter;
@@ -62,7 +63,8 @@ void Presentacion(){
 *                                                   *
 * La función se realizó el 17 de abril del 2018.    *
 *                                                   *
-* Autor:Zurita Escobar Fernanda.                    *
+* Autores:Zurita Escobar Fernanda                   *
+* José Carlos Paniagua Mendoza                      *
 ****************************************************/
 void Menu(){
   int opcion;//Variable entero para seleccionar número.

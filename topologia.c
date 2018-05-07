@@ -9,12 +9,26 @@
 *                                                   *
 * El programa se realizó el 23 de abril del 2018.   *
 *                                                   *
-* Autor:Zurita Escobar Fernanda.                    *
+* Autores:Zurita Escobar Fernanda                   *
+* José Carlos Paniagua Mendoza                      *
 ****************************************************/
 /*Bibliotecas que se utilizaran en el programa*/
+
+struct tablas{
+  char nodo, confirmado, sigSalto;
+  int costo;
+};typedef struct tablas rtabla;
+
+struct nodos{
+  char valor;
+  int nCon;
+  struct nodos *sig;
+  struct tablas *tablaR;
+  struct nodos **conexion;
+};typedef struct nodos nodo;
+
 #include<stdio.h>
 #include<stdlib.h>
-#include "topologia2.h"
 
 /*Funciones que componen el programa.*/
 void GenerarEdificios(nodo **inicio);
