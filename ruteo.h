@@ -18,4 +18,4 @@ int Comprobado(rtabla tabla[], int nNodos);
 char obtenervalor(nodo *nodoa, int hasta);
 int obtenervalor2(nodo *nodoa, char hasta);
 void guardarR(nodo *inicio);
-void iniciarTablas(rtabla tabla[], int tabla1[],int nNodos);
+void iniciarTablas(rtabla tabla[], int tabla1[],int nNodos, nodo *inicio);
