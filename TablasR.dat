@@ -1,0 +1,18 @@
+----------Tablas de E----------
+0 5 14 9 11 12 
+E D D D D D 
+----------Tablas de D----------
+5 0 9 4 6 7 
+E D C C C C 
+----------Tablas de F----------
+14 9 0 5 3 4 
+B B F B B B 
+----------Tablas de C----------
+9 4 5 0 2 3 
+D D B C B B 
+----------Tablas de B----------
+11 6 3 2 0 1 
+C C F C B A 
+----------Tablas de A----------
+12 7 4 3 1 0 
+B B B B B A 
