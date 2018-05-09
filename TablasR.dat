@@ -1,18 +1,21 @@
-----------Tablas de E----------
-0 5 14 9 11 12 
-E D D D D D 
-----------Tablas de D----------
-5 0 9 4 6 7 
-E D C C C C 
-----------Tablas de F----------
-14 9 0 5 3 4 
-B B F B B B 
-----------Tablas de C----------
-9 4 5 0 2 3 
-D D B C B B 
-----------Tablas de B----------
-11 6 3 2 0 1 
-C C F C B A 
+----------Tablas de X----------
+0 11 30 9 24 27 19
+X N N N N N N
+----------Tablas de T----------
+11 0 23 2 17 20 12
+N T N N N N N
+----------Tablas de W----------
+30 23 0 21 16 3 11
+Z Z W Z Z Z Z
+----------Tablas de N----------
+9 2 21 0 15 18 10
+X T A N A A A
+----------Tablas de P----------
+24 17 16 15 0 13 5
+A A A A P A A
+----------Tablas de Z----------
+27 20 3 18 13 0 8 
+A A W A A Z A
 ----------Tablas de A----------
-12 7 4 3 1 0 
-B B B B B A 
+19 12 11 10 5 8 0
+N N Z N P Z A
