@@ -1,0 +1,1 @@
+void caminoCorto(nodo *inicio);
