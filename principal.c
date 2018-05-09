@@ -26,11 +26,15 @@ int main(void)//Comienza main.
 {
   int **tabla;
   nodo *inicio= NULL;
-  
+
   GenerarEdificios(&inicio);
   GenerarTabla(&tabla,inicio);
   GenerarConexiones(&inicio,tabla);
   imprimir(inicio);
+  tablasRuteo(&inicio, tabla);
+  conNodos(inicio);
+  guardarR(inicio);
+
 
   // Presentacion();
   // Menu();

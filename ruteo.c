@@ -26,7 +26,7 @@
 *                                                    *
 * Autores:Zurita Escobar Fernanda                    *
 *****************************************************/
-void tablasRuteo(nodo **inicio, int **tablaA){//Inicia función tablasRuteo.
+void tablasRuteo(nodo **inicio, int **tabla){//Inicia función tablasRuteo.
   nodo *aux=*inicio, *aux2;//Variables.
   rtabla *tablaF, *tablaAu;//Declaración de variables.
   int nNodos=conNodos(*inicio), i, costAnt=0, j, menor, nmen, bandera, k;
@@ -34,7 +34,7 @@ void tablasRuteo(nodo **inicio, int **tablaA){//Inicia función tablasRuteo.
   tablaAu=(rtabla*)malloc(sizeof(rtabla)*nNodos);//Se crea tabla auxiliar.
   for(i=0;i<nNodos;i++){
     tablaF=(rtabla*)malloc(sizeof(rtabla)*nNodos);//Se crea tabla final.
-    iniciarTablas(tablaAu,tablaA[i],nNodos,*inicio);//Se inicializa la tabla auxiliar.
+    iniciarTablas(tablaAu,tabla[i],nNodos,*inicio);//Se inicializa la tabla auxiliar.
     for(j=0;j<nNodos;j++){//Se inicializa la tabla final con valores nulos;
       tablaF[j].confirmado='N';
       tablaF[j].costo=-1;
@@ -59,17 +59,17 @@ void tablasRuteo(nodo **inicio, int **tablaA){//Inicia función tablasRuteo.
         }
       }
       tablaF[nmen].confirmado='S';//Se confirma el nodo de costo más bajo.
-      iniciarTablas(tablaAu,tablaA[nmen],nNodos,*inicio);//Se inicializa la tabla de nuevo
+      iniciarTablas(tablaAu,tabla[nmen],nNodos,*inicio);//Se inicializa la tabla de nuevo
       costAnt=tablaF[nmen].costo;//Se aumenta el costo anterior
       nAnt=obtenervalor(*inicio,nmen);//Se obtiene el valor anterior
     }
     for(j=0;j<nNodos;j++){//Se comprueban las rutas de donde salieron
-      while(tablaA[i][obtenervalor2(*inicio,tablaF[j].sigSalto)]==-1){
+      while(tabla[i][obtenervalor2(*inicio,tablaF[j].sigSalto)]==-1){
         tablaF[j].sigSalto=tablaF[obtenervalor2(*inicio,tablaF[j].sigSalto)].sigSalto;
       }
     }
     for(j=0;j<nNodos;j++){
-      if(tablaA[i][obtenervalor2(*inicio,tablaF[j].sigSalto)]!=-1&&tablaF[j].sigSalto==obtenervalor(*inicio,i)){
+      if(tabla[i][obtenervalor2(*inicio,tablaF[j].sigSalto)]!=-1&&tablaF[j].sigSalto==obtenervalor(*inicio,i)){
         tablaF[j].sigSalto=obtenervalor(*inicio,j);
       }
     }

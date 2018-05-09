@@ -12,8 +12,7 @@
 ****************************************************/
 
 /*Funciones que componen el programa.*/
-void tablasRuteo(nodo **inicio, int **tablaA);
-int conNodos(nodo *inicio);
+void tablasRuteo(nodo **inicio, int **tabla);
 int Comprobado(rtabla tabla[], int nNodos);
 char obtenervalor(nodo *nodoa, int hasta);
 int obtenervalor2(nodo *nodoa, char hasta);
