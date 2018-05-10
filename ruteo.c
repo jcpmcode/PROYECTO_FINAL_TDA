@@ -9,7 +9,7 @@
 *                                                   *
 * El programa se realizó el 7 de mayo del 2018.     *
 *                                                   *
-* Autor:Zurita Escobar Fernanda                     *
+* Autor:Zurita Escobar Fernanda. .                    *
 ****************************************************/
 #include "tipos.h"
 #include "ruteo.h"
@@ -33,12 +33,15 @@ void tablasRuteo(nodo **inicio, int **tabla){//Inicia función tablasRuteo.
   char nAnt;
   tablaAu=(rtabla*)malloc(sizeof(rtabla)*nNodos);//Se crea tabla auxiliar.
   for(i=0;i<nNodos;i++){
+    aux2=*inicio; /*Línea agregada por Daniela Ontiveros para el destino en direccionamiento*/
     tablaF=(rtabla*)malloc(sizeof(rtabla)*nNodos);//Se crea tabla final.
     iniciarTablas(tablaAu,tabla[i],nNodos,*inicio);//Se inicializa la tabla auxiliar.
     for(j=0;j<nNodos;j++){//Se inicializa la tabla final con valores nulos;
+      tablaF[j].nodo=aux2->valor; /*Línea agregada por Daniela Ontiveros para el destino en direccionamiento*/
       tablaF[j].confirmado='N';
       tablaF[j].costo=-1;
       tablaF[j].sigSalto='\n';
+      aux2=aux2->sig;/*Línea agregada por Daniela Ontiveros para el destino en direccionamiento*/
     }
     costAnt=0;//Se inicializa la variable en 0.
     nAnt=obtenervalor(*inicio, i);//Se obtiene el valor del nodo donde esta la tabla.
@@ -174,14 +177,20 @@ void guardarR(nodo *inicio){
     fp=fopen("TablasR.dat","wt");
     while(indice!=NULL){
         fprintf(fp,"----------Tablas de %c----------\n",indice->valor);
+        printf("----------Tablas de %c----------\n",indice->valor);
+
         for(j=0;j<nNodos;j++){
           fprintf(fp,"%d ",indice->tablaR[j].costo);
+          printf("%d ",indice->tablaR[j].costo);
         }
         fprintf(fp,"\n");
+        printf("\n");
         for(j=0;j<nNodos;j++){
           fprintf(fp,"%c ",indice->tablaR[j].sigSalto);
+          printf("%c ",indice->tablaR[j].sigSalto);
         }
         fprintf(fp,"\n");
+        printf("\n");
         indice=indice->sig;
     }
     fclose(fp);
