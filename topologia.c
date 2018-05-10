@@ -34,38 +34,38 @@ void GenerarEdificios(nodo **inicio){//Inicia función GenerarEdificios.
   int costo, bandera;
   arch=fopen("ruta.dat","rt");//Se abre el archivo donde se encuentra la información.
   while(fscanf(arch,"%c:%c:%d\n",&x,&y,&costo)==3){
-     indice=*inicio;
-     nuevo=(nodo*)malloc(sizeof(nodo));//Se crea nuevo edificio.
-     nuevo->valor=x;
-     if(*inicio==NULL){
-        nuevo->sig=NULL;
+    indice=*inicio;
+    nuevo=(nodo*)malloc(sizeof(nodo));//Se crea nuevo edificio.
+    nuevo->valor=x;
+    if(*inicio==NULL){
+      nuevo->sig=NULL;
+      *inicio=nuevo;
+    }
+    else{//Se comprueba que el edificio no este creado.
+      bandera=0;
+      while(indice!=NULL){
+        if(indice->valor==x)
+        bandera=1;
+        indice=indice->sig;
+      }
+      if(bandera==0){//Se inserta edificio sino esta creado.
+        nuevo->sig=*inicio;
         *inicio=nuevo;
-     }
-     else{//Se comprueba que el edificio no este creado.
-        bandera=0;
-        while(indice!=NULL){
-            if(indice->valor==x)
-                bandera=1;
-            indice=indice->sig;
-        }
-        if(bandera==0){//Se inserta edificio sino esta creado.
-            nuevo->sig=*inicio;
-            *inicio=nuevo;
-        }
-     }
-     indice=*inicio;
-     nuevo=(nodo*)malloc(sizeof(nodo));//Se crea nuevo edificio.
-     nuevo->valor=y;
-        bandera=0;
-        while(indice!=NULL){//Se busca si el edificio ya esta creado.
-            if(indice->valor==y)
-                bandera=1;
-            indice=indice->sig;
-        }
-        if(bandera==0){//Se inserta edificio sino esta creado.
-            nuevo->sig=*inicio;
-            *inicio=nuevo;
-        }
+      }
+    }
+    indice=*inicio;
+    nuevo=(nodo*)malloc(sizeof(nodo));//Se crea nuevo edificio.
+    nuevo->valor=y;
+    bandera=0;
+    while(indice!=NULL){//Se busca si el edificio ya esta creado.
+      if(indice->valor==y)
+      bandera=1;
+      indice=indice->sig;
+    }
+    if(bandera==0){//Se inserta edificio sino esta creado.
+      nuevo->sig=*inicio;
+      *inicio=nuevo;
+    }
   }
 }
 
@@ -88,15 +88,15 @@ void GenerarTabla(int ***tablaA, nodo *inicio){//Inicia función GenerarTabla.
   *tablaA = (int **)malloc(sizeof(int *)*conNodos(inicio));
   for (i=0; i < conNodos(inicio); i++) // Se genera arreglo bidimensional dinamicamente.
   {
-      (*tablaA)[i] = (int *) malloc (sizeof(int)*conNodos(inicio));
+    (*tablaA)[i] = (int *) malloc (sizeof(int)*conNodos(inicio));
   }
   for(i=0;i<conNodos(inicio);i++)
-    for(j=0;j<conNodos(inicio);j++){//Se inicializa la tabla de adyacencias.
-      if(i==j)
-        (*tablaA)[i][j]=0;//Se pone 0 porque es una conexión consigo mismo.
-      else
-        (*tablaA)[i][j]=-1;//Se pone 1 porque no se conoce el costo.
-      }
+  for(j=0;j<conNodos(inicio);j++){//Se inicializa la tabla de adyacencias.
+    if(i==j)
+    (*tablaA)[i][j]=0;//Se pone 0 porque es una conexión consigo mismo.
+    else
+    (*tablaA)[i][j]=-1;//Se pone 1 porque no se conoce el costo.
+  }
   i=0;
   j=0;
   while(aux1!=NULL){
@@ -107,9 +107,9 @@ void GenerarTabla(int ***tablaA, nodo *inicio){//Inicia función GenerarTabla.
       aux2=inicio;
       if(indice==a||indice==b){
         if(a==indice)
-          buscar=b;
+        buscar=b;
         else
-          buscar=a;
+        buscar=a;
         while(aux2!=NULL && aux2->valor!=buscar){
           j++;
           aux2=aux2->sig;
@@ -123,8 +123,8 @@ void GenerarTabla(int ***tablaA, nodo *inicio){//Inicia función GenerarTabla.
   }
   for(i=0;i<conNodos(inicio);i++){//Se imprime la tabla de adyacencias.
     for(j=0;j<conNodos(inicio);j++)
-      printf("%3d ",(*tablaA)[i][j]);
-      printf("\n");
+    printf("%3d ",(*tablaA)[i][j]);
+    printf("\n");
   }
 }//Fin GenerarTabla.
 
@@ -146,7 +146,7 @@ void GenerarConexiones(nodo **inicio, int **tablaA){//Inicia función GenerarCon
     num=0;
     for(j=0;j<nNodos;j++){
       if(tablaA[i][j]!=-1 && tablaA[i][j]!=0)//Cuenta el numero de conexiones.
-        num++;
+      num++;
     }
     aux1->nCon=num;
     aux1->conexion=(nodo**)malloc(sizeof(nodo*)*num);//Genera el arreglo dinamico.
@@ -180,13 +180,13 @@ void GenerarConexiones(nodo **inicio, int **tablaA){//Inicia función GenerarCon
 * José Carlos Paniagua Mendoza                      *
 ****************************************************/
 int conNodos(nodo *inicio){//Inicia función conNodos.
-    nodo *aux=inicio;
-    int sum=0;
-    while(aux!=NULL){
-        sum=sum+1;
-        aux=aux->sig;
-    }
-    return sum;
+  nodo *aux=inicio;
+  int sum=0;
+  while(aux!=NULL){
+    sum=sum+1;
+    aux=aux->sig;
+  }
+  return sum;
 }//Fin conNodos.
 
 /*****************************************************
@@ -200,15 +200,24 @@ int conNodos(nodo *inicio){//Inicia función conNodos.
 * José Carlos Paniagua Mendoza                      *
 ****************************************************/
 void imprimir(nodo *inicio){//Inicia función imprimir.
-    nodo *indice=inicio;
-    int i;
-    while(indice!=NULL){
-        printf("Edificio: %c\n",indice->valor);//Imprime el edficio.
-        printf("Numero de conexiones: %d\n",indice->nCon);//Imprime el numero de conexiones.
-        for(i=0;i<indice->nCon;i++){//Recorre el arreglo de pointers.
-          printf("\t%c\n",indice->conexion[i]->valor);//Imprime el valor de la conexión.
-        }
-        indice=indice->sig;
-        printf("----------------------\n");
+  nodo *indice=inicio;
+  int i;
+  while(indice!=NULL){
+    printf("Edificio: %c\n",indice->valor);//Imprime el edficio.
+    printf("Numero de conexiones: %d\n",indice->nCon);//Imprime el numero de conexiones.
+    for(i=0;i<indice->nCon;i++){//Recorre el arreglo de pointers.
+      printf("\t%c\n",indice->conexion[i]->valor);//Imprime el valor de la conexión.
     }
+    indice=indice->sig;
+    printf("----------------------\n");
+  }
+}//Fin imprimir.
+
+void liberar(nodo *inicio){//Inicia función imprimir.
+  nodo *indice=inicio;
+  int i;
+  while(indice!=NULL){//Se recorre nodo por noso y se va liberando el espacio de memoria reservado.
+    free(indice);
+    indice=indice->sig;
+  }
 }//Fin imprimir.

@@ -18,3 +18,4 @@ void GenerarTabla(int ***tablaA, nodo *inicio);
 void GenerarConexiones(nodo **inicio, int **tabla);
 int conNodos(nodo *inicio);
 void imprimir(nodo *inicio);
+void liberar(nodo *inicio);

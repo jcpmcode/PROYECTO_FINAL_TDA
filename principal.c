@@ -53,7 +53,7 @@ int main(void)//Comienza main.
 ****************************************************/
 void Presentacion(){
   char Enter;
-  printf("\n    ¡BIENVENIDO A LA APLICACIÓN ...!");
+  printf("\n    ¡BIENVENIDO A LA APLICACIÓN !");
   printf("\n Esta aplicación mostrará cual es el camino más eficiente");
   printf("\n para llegar de un destino a otro en la Universidad Iberoamericana");
   printf("\nIntegrantes:");
@@ -115,6 +115,7 @@ void Menu(){
         while (getchar() != '\n');
         break;
       case 4:
+        liberar(inicio);
         printf("Adiós.\n");
         break;
       default:
