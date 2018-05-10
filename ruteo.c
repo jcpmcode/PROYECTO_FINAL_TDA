@@ -177,14 +177,20 @@ void guardarR(nodo *inicio){
     fp=fopen("TablasR.dat","wt");
     while(indice!=NULL){
         fprintf(fp,"----------Tablas de %c----------\n",indice->valor);
+        printf("----------Tablas de %c----------\n",indice->valor);
+
         for(j=0;j<nNodos;j++){
           fprintf(fp,"%d ",indice->tablaR[j].costo);
+          printf("%d ",indice->tablaR[j].costo);
         }
         fprintf(fp,"\n");
+        printf("\n");
         for(j=0;j<nNodos;j++){
           fprintf(fp,"%c ",indice->tablaR[j].sigSalto);
+          printf("%c ",indice->tablaR[j].sigSalto);
         }
         fprintf(fp,"\n");
+        printf("\n");
         indice=indice->sig;
     }
     fclose(fp);
